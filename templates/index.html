@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="card">
+    <h2>Ingreso de Antecedentes del Empleado</h2>
+    <form action="{{ url_for('procesar') }}" method="POST" enctype="multipart/form-data">
+        
+        <!-- Bloque Personal -->
+        <h3 style="grid-column: span 2; margin-top:10px; color:var(--primary-dark)">1. Identificación Legal</h3>
+        <div class="form-group">
+            <label>Nombre Completo</label>
+            <input type="text" name="nombre" required placeholder="Ej: Marcela Soto">
+        </div>
+        <div class="form-group">
+            <label>Cédula Nacional (RUT)</label>
+            <input type="text" name="rut" required placeholder="Ej: 12.345.678-9">
+        </div>
+        <div class="form-group">
+            <label>Previsión AFP (Pensión)</label>
+            <select name="afp" required>
+                <option value="Habitat">Habitat</option>
+                <option value="Provida">Provida</option>
+                <option value="Modelo">Modelo</option>
+                <option value="PlanVital">PlanVital</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Sistema de Salud</label>
+            <select name="salud" required>
+                <option value="Fonasa">Fonasa (Público)</option>
+                <option value="Isapre Banmedica">Isapre Banmedica</option>
+                <option value="Isapre Colmena">Isapre Colmena</option>
+            </select>
+        </div>
+
+        <!-- Bloque Institucional -->
+        <h3 style="grid-column: span 2; margin-top:20px; color:var(--primary-dark)">2. Parámetros Laborales Aritméticos</h3>
+        <div class="form-group">
+            <label>Cargo Desempeñado</label>
+            <input type="text" name="cargo" required placeholder="Ej: Asistente QA">
+        </div>
+        <div class="form-group">
+            <label>Hrs. de Jornada Semanal (Máx 45)</label>
+            <input type="number" name="horas" min="1" max="50" required value="40">
+        </div>
+        <div class="form-group full">
+            <label>Salario Imponible Bruto Mensual (CLP $)</label>
+            <input type="number" name="bruto" min="500000" step="1000" required placeholder="Ej: 1500000" style="font-size: 1.2em; font-weight:bold;">
+        </div>
+
+        <!-- Puntos Extras -->
+        <h3 style="grid-column: span 2; margin-top:20px; color:var(--primary-dark)">3. Anexos Multimedia (Bono Extracurricular)</h3>
+        <div class="form-group">
+            <label>Fotografía Perfil Trabajador (.JPG/.PNG)</label>
+            <input type="file" name="foto" accept=".jpg,.jpeg,.png">
+        </div>
+        <div class="form-group">
+            <label>Documentos Adicionales QA (.PDF/.DOCX)</label>
+            <input type="file" name="documento" accept=".pdf,.doc,.docx,.txt">
+        </div>
+
+        <div class="form-group full" style="margin-top: 20px;">
+            <button type="submit" class="btn btn-primary" style="width: 100%; font-size:1.1em; padding:15px;">Matricular y Calcular Sueldo Líquido</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

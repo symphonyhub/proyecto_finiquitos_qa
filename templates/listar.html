@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="card">
+    <div style="display:flex; justify-content: space-between; align-items: center;">
+        <h2>Auditoría de Bases de Datos</h2>
+        <a href="{{ url_for('index') }}" class="btn btn-outline" style="text-decoration:none;">+ Matricular Trabajador</a>
+    </div>
+    
+    <div style="overflow-x: auto; margin-top: 20px;">
+        <table>
+            <thead>
+                <tr>
+                    <th>RUT Auditado</th>
+                    <th>Colaborador</th>
+                    <th>Parametrización Descuentos</th>
+                    <th>Salario Neto (Líquido)</th>
+                    <th style="text-align:center;">Acción Finiquito (Exportar PDF)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in trabajadores %}
+                <tr>
+                    <td style="font-weight: bold;">{{ t.rut }}</td>
+                    <td>{{ t.nombre }}<br><small style="color:var(--text-muted)">{{ t.cargo }}</small></td>
+                    <td>
+                        <span style="background:var(--background); padding:3px 6px; border-radius:4px; font-size:0.85em;">{{ t.afp }} (-10%)</span><br>
+                        <span style="background:var(--background); padding:3px 6px; border-radius:4px; font-size:0.85em; margin-top:4px; display:inline-block;">{{ t.salud }} (-7%)</span>
+                    </td>
+                    <td style="font-weight: bold; color:var(--primary-dark);">
+                        ${{ "{:,.0f}".format(t.sueldo_liquido) }}
+                    </td>
+                    <td style="text-align:center;">
+                        <a href="{{ url_for('generar_pdf', t_id=t.id) }}" class="btn btn-primary" style="text-decoration:none; display:inline-block; padding:8px 15px; font-size:0.9em;">
+                            Descargar Legal (.pdf)
+                        </a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="5" style="text-align:center; padding:30px; color:var(--text-muted);">El sistema SGC aún no tiene registros insertados.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
